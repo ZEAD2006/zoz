@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeyad Nasser | Junior Pentester</title>
+    <style>
+         :root {
+            --primary: #0f0;
+            --secondary: #00f7ff;
+            --dark: #111;
+            --darker: #0a0a0a;
+            --light: #fff;
+            --glow: 0 0 10px var(--primary);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%), radial-gradient(circle at 90% 80%, rgba(0, 247, 255, 0.05) 0%, transparent 20%);
+        }
+        /* Matrix Rain Effect */
+        
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        /* Profile Image */
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            display: block;
+            box-shadow: var(--glow);
+        }
+        /* Terminal Cursor Effect */
+        
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+            color: var(--primary);
+        }
+        /* Main Container */
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+        /* Header Styles */
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: var(--glow);
+            position: relative;
+        }
+        
+        .logo::after {
+            content: '_';
+            animation: blink 1s infinite;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 0.5rem;
+        }
+        
+        nav ul li a:hover {
+            text-shadow: var(--glow);
+            background: rgba(0, 255, 0, 0.1);
+        }
+        
+        nav ul li a::before {
+            content: '[';
+            margin-right: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a::after {
+            content: ']';
+            margin-left: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover::before,
+        nav ul li a:hover::after {
+            opacity: 1;
+        }
+        /* Hero Section */
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            bottom: -10px;
+            left: 0;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--secondary);
+        }
+        
+        .tagline {
+            font-family: monospace;
+            color: var(--light);
+            border-right: 2px solid var(--primary);
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 0 auto;
+            max-width: fit-content;
+        }
+        /* About Section */
+        
+        .about {
+            margin: 4rem 0;
+        }
+        
+        .about h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .about h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--light);
+            line-height: 1.7;
+        }
+        
+        .about-details {
+            background: var(--darker);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 5px;
+        }
+        
+        .detail-item {
+            margin-bottom: 1rem;
+        }
+        
+        .detail-item h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .detail-item p {
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        
+        .download-cv {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 0, 0.1);
+            color: var(--primary);
+            text-decoration: none;
+            border: 1px solid var(--primary);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .download-cv:hover {
+            background: rgba(0, 255, 0, 0.2);
+            box-shadow: var(--glow);
+        }
+        /* Skills Section */
+        
+        .skills {
+            margin: 4rem 0;
+        }
+        
+        .skills h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .skills h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skill-card {
+            background: var(--darker);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .skill-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .skill-card p {
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .skill-card:hover::before {
+            left: 100%;
+        }
+        /* Education Section */
+        
+        .education {
+            margin: 4rem 0;
+        }
+        
+        .education h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .education h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+        }
+        
+        .education-item {
+            background: var(--darker);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .education-item h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .education-item p {
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .education-item .date {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        /* Certifications Section */
+        
+        .certifications {
+            margin: 4rem 0;
+        }
+        
+        .certifications h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .certifications h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+        }
+        
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .cert-card {
+            background: var(--darker);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .cert-card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .cert-card p {
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        /* Contact Section */
+        
+        .contact {
+            margin: 4rem 0;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .contact h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .contact-item:hover {
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .social-link {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        /* Terminal Window Effect */
+        
+        .terminal-window {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            width: 100%;
+            max-width: 800px;
+            margin: 3rem auto;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .terminal-header {
+            background: var(--darker);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+        }
+        
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .terminal-btn.red {
+            background: #ff5f56;
+        }
+        
+        .terminal-btn.yellow {
+            background: #ffbd2e;
+        }
+        
+        .terminal-btn.green {
+            background: #27c93f;
+        }
+        
+        .terminal-title {
+            margin-left: 1rem;
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            height: 200px;
+            overflow-y: auto;
+        }
+        
+        .terminal-body p {
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+        
+        .terminal-body .command {
+            color: var(--primary);
+        }
+        
+        .terminal-body .output {
+            color: var(--secondary);
+        }
+        
+        .terminal-body .path {
+            color: #6a6aff;
+        }
+        
+        .terminal-body .comment {
+            color: #666;
+            font-style: italic;
+        }
+        /* Scrollbar */
+        
+         ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            nav ul {
+                display: none;
+            }
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            .skills-grid,
+            .certs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Hacker Animation */
+        
+        @keyframes flicker {
+            0%,
+            19%,
+            21%,
+            23%,
+            25%,
+            54%,
+            56%,
+            100% {
+                text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+            }
+            20%,
+            24%,
+            55% {
+                text-shadow: none;
+            }
+        }
+        
+        .hacker-text {
+            animation: flicker 3s infinite;
+        }
+        /* Binary Background */
+        
+        .binary-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        /* Glitch Effect */
+        
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+        
+        .glitch::before {
+            color: #0ff;
+            z-index: -1;
+            animation: glitch-effect 3s infinite;
+        }
+        
+        .glitch::after {
+            color: #f0f;
+            z-index: -2;
+            animation: glitch-effect 2s infinite reverse;
+        }
+        
+        @keyframes glitch-effect {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-3px, 3px);
+            }
+            40% {
+                transform: translate(-3px, -3px);
+            }
+            60% {
+                transform: translate(3px, 3px);
+            }
+            80% {
+                transform: translate(3px, -3px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix"></canvas>
+
+    <!-- Binary Background -->
+    <div class="binary-bg" id="binary"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo hacker-text" data-text="Zeyad Nasser Venom">Zeyad Nasser [Venom]</div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#certs">Certifications</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero" id="about">
+            <img src="2.jpg" alt="Zeyad Nasser" class="profile-img">
+            <h1 class="glitch" data-text="Junior Pentester">Junior Pentester</h1>
+            <p>Junior web penetration tester and bug bounty hunter</p>
+            <div class="tagline" id="tagline"></div>
+
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-btn red"></div>
+                    <div class="terminal-btn yellow"></div>
+                    <div class="terminal-btn green"></div>
+                    <div class="terminal-title">terminal - bash</div>
+                </div>
+                <div class="terminal-body" id="terminal">
+                    <p><span class="path">Zeyad@Venom:~$ </span> <span class="command">whoami</span></p>
+                    <p class="output">zeyad_nasser | web_pentester | bug_bounty_hunter</p>
+                    <p><span class="path">Zeyad@Venom:~$ </span> <span class="command">cat skills.txt</span></p>
+                    <p class="output">Web App Pentesting | Red Teaming | Scripting Tools</p>
+                    <p><span class="path">Zeyad@Venom:~$ </span> <span class="command"></span><span class="cursor">_</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm Zeyad Nasser, a cybersecurity student and junior penetration tester with 1.5+ years of hands-on experience in web security and bug bounty hunting.</p>
+                    <p>Started as a web developer for 3 years before transitioning to cybersecurity, which gave me unique insight into both development and security perspectives.</p>
+                    <p>I've successfully identified and reported vulnerabilities in major platforms through bug bounty programs. My technical skills are complemented by strong problem-solving abilities and persistence in uncovering security flaws.</p>
+                    <p>Currently expanding my expertise in network security while continuing to develop custom tools for penetration testing.</p>
+                    <a href="Baghdadi.pdf" class="download-cv">Download CV</a>
+                </div>
+                <div class="about-details">
+                    <div class="detail-item">
+                        <h3>Experience</h3>
+                        <p>1.5+ years in penetration testing and bug hunting</p>
+                        <p>200+ TryHackMe labs completed</p>
+                        <p>Vulnerabilities found are more than 50 vulns sinse 2025 started </p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Education</h3>
+                        <p>BSc in Cybersecurity</p>
+                        <p>Lotus University, Minya</p>
+                        <p>Year of graduation: 2027</p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Courses will be finished soon... </h3>
+                        <p>CCNA (NTI)</p>
+                        <p>Huawei Network Administrator (depi)</p>
+                        <p>CCST Cybersecurity (Cisco)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills" id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Web Penetration Testing</h3>
+                    <p>Identifying and exploiting vulnerabilities in web applications including OWASP Top 10, business logic flaws, and authentication issues.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Bug Bounty Hunting</h3>
+                    <p>Experience finding and responsibly disclosing vulnerabilities in major platforms through bug bounty programs.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Security Tools</h3>
+                    <p>Proficient with Burp Suite, Nmap, Metasploit, Wireshark, and other standard penetration testing tools.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Tools Development</h3>
+                    <p>Developing custom scripts and tools in Python and Bash to automate security testing and vulnerability discovery.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Vulnerability Research</h3>
+                    <p>Methodical approach to finding and analyzing security vulnerabilities through manual testing and research.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Network Security</h3>
+                    <p>Currently developing skills in network penetration testing and defense strategies through Courses from cisco.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="education" id="education">
+            <h2>Education</h2>
+            <div class="education-item">
+                <h3>Bachelor of computer and information science</h3>
+                <p>Lotus University in Minya - Faculty of Computers and Information </p>
+                <p class="date">2024 - 2027 </p>
+                <p>Second year student specializing in cybersecurity with focus on penetration testing and network security.</p>
+            </div>
+        </section>
+
+        <section class="certifications" id="certs">
+            <h2>Certifications</h2>
+            <div class="certs-grid">
+                <div class="cert-card">
+                    <h3>Pre Security</h3>
+                    <p>TryHackMe</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Junior Pentester</h3>
+                    <p>TryHackMe</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Red Teaming</h3>
+                    <p>TryHackMe</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Red teaming and bug hunting </h3>
+                    <p>Udemy</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Advanced Bug Bounty secrets for pentesters </h3>
+                    <p>Udemy</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Bash Scripting</h3>
+                    <p>Udemy</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Python Programming</h3>
+                    <p>Offline Certification</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <h2>Get In Touch</h2>
+            <p>For security consulting, penetration testing, or research collaboration</p>
+
+            <div class="contact-info">
+                <a href="tel:+201141699086" class="contact-item">
+                    <span>+20 114 169 9086</span>
+                </a>
+                <a href="mailto:zeadnasser39@gmail.com" class="contact-item">
+                    <span>zeadnasser39@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/zeyad-nasser-95701a329" target="_blank" class="contact-item">
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://www.facebook.com/share/14i1kbisLZ/" class="contact-item">
+                    <span>Facebook</span>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 Zeyad Nasser | Junior Pentester</p>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+
+        const alphabet = katakana + latin + nums + symbols;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 30);
+
+        // Binary Background
+        const binaryBg = document.getElementById('binary');
+        let binaryText = '';
+        const binaryChars = '01';
+
+        for (let i = 0; i < 1000; i++) {
+            binaryText += binaryChars.charAt(Math.floor(Math.random() * binaryChars.length));
+        }
+
+        binaryBg.textContent = binaryText;
+
+        // Terminal Typewriter Effect
+        const terminal = document.getElementById('terminal');
+        const commands = [{
+            cmd: 'nmap -sV -O -T4 target.com',
+            output: 'Starting Nmap scan...\nDiscovered open ports: 80,443,8080\nRunning: Linux 4.x'
+        }, {
+            cmd: 'searchsploit Apache 2.4.41',
+            output: '2 exploits found for Apache 2.4.41'
+        }, {
+            cmd: 'python custom_scanner.py',
+            output: 'Scanning for XSS vulnerabilities...\nFound 3 potential XSS points'
+        }];
+
+        let currentCommand = 0;
+
+        const typeCommand = () => {
+            if (currentCommand >= commands.length) {
+                currentCommand = 0;
+            }
+
+            const command = commands[currentCommand];
+            const prompt = document.createElement('p');
+            prompt.innerHTML = `<span class="path">venom@pentester:~$</span> <span class="command">${command.cmd}</span>`;
+
+            const output = document.createElement('p');
+            output.className = 'output';
+            output.textContent = command.output;
+
+            terminal.insertBefore(prompt, terminal.lastElementChild);
+            terminal.insertBefore(output, terminal.lastElementChild);
+
+            terminal.scrollTop = terminal.scrollHeight;
+            currentCommand++;
+        };
+
+        setInterval(typeCommand, 5000);
+
+        // Tagline Typewriter Effect
+        const taglines = [
+            "Junior Pentester | Bug Bounty Hunter | Security Researcher",
+            "Finding vulnerabilities before the bad actors do",
+            "From web development to web security",
+            "Building skills one vulnerability at a time"
+        ];
+
+        const taglineElement = document.getElementById('tagline');
+        let currentTagline = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+
+        const typeTagline = () => {
+            const currentText = taglines[currentTagline];
+
+            if (isDeleting) {
+                taglineElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                taglineElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                typingSpeed = 1500;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                currentTagline = (currentTagline + 1) % taglines.length;
+                typingSpeed = 500;
+            }
+
+            setTimeout(typeTagline, typingSpeed);
+        };
+
+        // Start the typewriter effect
+        setTimeout(typeTagline, 1000);
+
+        // Window Resize Handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+
+</html>
